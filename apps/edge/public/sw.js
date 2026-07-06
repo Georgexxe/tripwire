@@ -1,7 +1,7 @@
 // Offline shell: pre-cache the app skeleton, then cache every successful GET at
 // runtime (app bundle, MediaPipe WASM, the .tflite model) so a reload with no
 // network still boots the full agent.
-const CACHE = "tripwire-v3";
+const CACHE = "tripwire-v4";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest"];
 const RUNTIME_HOSTS = [self.location.origin, "https://cdn.jsdelivr.net", "https://storage.googleapis.com"];
 
@@ -21,6 +21,20 @@ self.addEventListener("fetch", (e) => {
   // Never cache the API; those calls must hit the network (the queue handles offline).
   if (e.request.method !== "GET") return;
   if (url.includes("/escalate") || url.includes("/sync") || url.includes("/digest") || url.includes("/health")) return;
+  // App shell: network-first so new deployments land, cached copy keeps offline reloads working.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request)
+        .then((resp) => {
+          const copy = resp.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, copy));
+          return resp;
+        })
+        .catch(() => caches.match(e.request).then((r) => r || caches.match("./")))
+    );
+    return;
+  }
+  // Everything else (hashed assets, model, WASM): cache-first with runtime fill.
   e.respondWith(
     caches.match(e.request).then(
       (cached) =>
