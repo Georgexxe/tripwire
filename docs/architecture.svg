@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 640" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#334155"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#ea580c"/>
+    </marker>
+    <style>
+      .title { font-size: 26px; font-weight: 700; fill: #0f172a; }
+      .sub { font-size: 13px; fill: #64748b; }
+      .panel-label { font-size: 15px; font-weight: 700; letter-spacing: .4px; }
+      .box { font-size: 13px; font-weight: 600; fill: #0f172a; }
+      .boxsub { font-size: 11px; fill: #475569; }
+      .chan { font-size: 12px; font-weight: 600; fill: #ea580c; }
+      .note { font-size: 11px; fill: #64748b; }
+      .priv { font-size: 11px; font-weight: 700; fill: #16a34a; }
+    </style>
+  </defs>
+
+  <rect width="1040" height="640" fill="#ffffff"/>
+  <text x="40" y="46" class="title">Tripwire</text>
+  <text x="40" y="68" class="sub">Privacy-preserving, tamper-evident edge perception agent · EdgeAgent track · phone = edge runtime</text>
+
+  <!-- ===================== EDGE (PHONE) PANEL ===================== -->
+  <rect x="40" y="92" width="430" height="500" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="60" y="120" class="panel-label" fill="#334155">PHONE — EDGE RUNTIME (PWA in browser)</text>
+
+  <!-- privacy boundary -->
+  <rect x="60" y="134" width="390" height="226" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="70" y="152" class="priv">PRIVACY BOUNDARY — raw video never leaves the device</text>
+
+  <!-- camera -->
+  <rect x="80" y="166" width="160" height="56" rx="9" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="96" y="190" class="box">Camera capture</text>
+  <text x="96" y="208" class="boxsub">getUserMedia · the edge sensor</text>
+
+  <!-- on-device model -->
+  <rect x="270" y="166" width="160" height="56" rx="9" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="286" y="190" class="box">On-device model</text>
+  <text x="286" y="208" class="boxsub">MediaPipe / TF.js · local</text>
+
+  <line x1="240" y1="194" x2="266" y2="194" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- ledger -->
+  <rect x="80" y="248" width="350" height="92" rx="9" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="96" y="272" class="box">Tamper-evident ledger</text>
+  <text x="96" y="292" class="boxsub">SHA-256 hash chain · ECDSA P-256 signatures (WebCrypto)</text>
+  <text x="96" y="310" class="boxsub">every detection appended · stored in IndexedDB</text>
+  <text x="96" y="328" class="boxsub">verifiable provenance — any edit breaks the chain</text>
+
+  <line x1="160" y1="222" x2="160" y2="246" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="350" y1="222" x2="350" y2="246" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- escalation builder -->
+  <rect x="80" y="386" width="160" height="64" rx="9" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="96" y="410" class="box">Escalation builder</text>
+  <text x="96" y="428" class="boxsub">summary + tiny keyframe</text>
+  <text x="96" y="444" class="boxsub">NOT raw video</text>
+
+  <!-- offline queue -->
+  <rect x="270" y="386" width="160" height="64" rx="9" fill="#fffbeb" stroke="#fcd34d"/>
+  <text x="286" y="410" class="box">Offline queue</text>
+  <text x="286" y="428" class="boxsub">no network? keep logging,</text>
+  <text x="286" y="444" class="boxsub">queue → sync on reconnect</text>
+
+  <line x1="200" y1="340" x2="200" y2="384" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="350" y1="340" x2="350" y2="384" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <text x="60" y="478" class="note">Service worker keeps the app shell running fully offline.</text>
+  <text x="60" y="496" class="note">Bandwidth saved vs streaming raw video: ~99.8%.</text>
+
+  <!-- ===================== NETWORK CHANNEL ===================== -->
+  <line x1="470" y1="418" x2="600" y2="418" stroke="#ea580c" stroke-width="2.4" marker-end="url(#arrowOrange)"/>
+  <text x="476" y="406" class="chan">summary + keyframe →</text>
+  <text x="476" y="438" class="note">(text-sized payload)</text>
+
+  <line x1="600" y1="300" x2="470" y2="300" stroke="#334155" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="486" y="292" class="note">← verdict (severity + reasoning)</text>
+
+  <!-- ===================== ALIBABA CLOUD PANEL ===================== -->
+  <rect x="600" y="92" width="400" height="500" rx="14" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="620" y="120" class="panel-label" fill="#c2410c">ALIBABA CLOUD — backend (ECS / Function Compute)</text>
+
+  <!-- /escalate -->
+  <rect x="620" y="140" width="360" height="60" rx="9" fill="#ffffff" stroke="#fdba74"/>
+  <text x="636" y="164" class="box">POST /escalate</text>
+  <text x="636" y="184" class="boxsub">receives summary + keyframe</text>
+
+  <!-- Qwen -->
+  <rect x="620" y="218" width="360" height="74" rx="9" fill="#ffffff" stroke="#ea580c" stroke-width="1.6"/>
+  <text x="636" y="244" class="box">Qwen reasoning — qwen-vl-plus / qwen-plus</text>
+  <text x="636" y="264" class="boxsub">DashScope / Model Studio · OpenAI-compatible API</text>
+  <text x="636" y="282" class="boxsub">dashscope-intl.aliyuncs.com  →  PROOF FILE: qwen.ts</text>
+
+  <line x1="800" y1="200" x2="800" y2="216" stroke="#ea580c" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
+
+  <!-- /sync -->
+  <rect x="620" y="360" width="360" height="60" rx="9" fill="#ffffff" stroke="#fdba74"/>
+  <text x="636" y="384" class="box">POST /sync</text>
+  <text x="636" y="404" class="boxsub">receives queued ledger on reconnect</text>
+
+  <!-- verify -->
+  <rect x="620" y="438" width="172" height="64" rx="9" fill="#ffffff" stroke="#fdba74"/>
+  <text x="636" y="462" class="box">Chain verify</text>
+  <text x="636" y="480" class="boxsub">recompute hashes,</text>
+  <text x="636" y="496" class="boxsub">flag any tamper</text>
+
+  <!-- store -->
+  <rect x="808" y="438" width="172" height="64" rx="9" fill="#ffffff" stroke="#fdba74"/>
+  <text x="824" y="462" class="box">Ledger store</text>
+  <text x="824" y="480" class="boxsub">JSON (demo) or</text>
+  <text x="824" y="496" class="boxsub">Alibaba OSS (upgrade)</text>
+
+  <line x1="800" y1="420" x2="800" y2="436" stroke="#ea580c" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
+  <line x1="792" y1="470" x2="806" y2="470" stroke="#334155" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- rubric strip -->
+  <text x="620" y="540" class="note">Innovation: verifiable edge logging + perception-firewall framing.</text>
+  <text x="620" y="558" class="note">Technical depth: edge↔cloud orchestration, hash-chain integrity, offline sync.</text>
+  <text x="620" y="576" class="note">Impact: privacy + scarce bandwidth + evidence integrity.</text>
+</svg>

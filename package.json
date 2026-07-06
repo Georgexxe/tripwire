@@ -1,0 +1,14 @@
+{
+  "name": "tripwire",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Privacy-preserving, tamper-evident edge perception agent. On-device screening on a phone; only summaries escalate to Qwen on Alibaba Cloud; every detection is written to a hash-chained, signed local ledger. Built for the Global AI Hackathon Series with Qwen Cloud (EdgeAgent track).",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev:edge": "pnpm --filter @tripwire/edge run dev",
+    "dev:server": "pnpm --filter @tripwire/server run dev",
+    "build:edge": "pnpm --filter @tripwire/edge run build",
+    "typecheck": "pnpm --filter @tripwire/shared run typecheck && pnpm --filter @tripwire/edge run typecheck && pnpm --filter @tripwire/server run typecheck"
+  },
+  "license": "MIT"
+}
