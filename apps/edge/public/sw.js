@@ -1,8 +1,8 @@
 // Offline shell: pre-cache the app skeleton, then cache every successful GET at
 // runtime (app bundle, MediaPipe WASM, the .tflite model) so a reload with no
 // network still boots the full agent.
-const CACHE = "tripwire-v2";
-const ASSETS = ["/", "/index.html", "/manifest.webmanifest"];
+const CACHE = "tripwire-v3";
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest"];
 const RUNTIME_HOSTS = [self.location.origin, "https://cdn.jsdelivr.net", "https://storage.googleapis.com"];
 
 self.addEventListener("install", (e) => {
