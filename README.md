@@ -56,11 +56,15 @@ docs            architecture
 
 This workspace uses pnpm.
 
+Get an API key from [Qwen Cloud](https://www.qwencloud.com) (API Keys page). Your
+workspace shows an **OpenAI Compatible Endpoint** — use it as `DASHSCOPE_BASE_URL`.
+
 ```bash
 pnpm install
 
 # 1) backend
 export DASHSCOPE_API_KEY=sk-...   # optional locally; required for real Qwen calls
+export DASHSCOPE_BASE_URL=https://<your-workspace>.maas.aliyuncs.com/compatible-mode/v1
 pnpm dev:server                   # http://localhost:9000
 
 # 2) edge PWA
@@ -92,8 +96,8 @@ integration lives in `apps/server/src/qwen.ts`; deployment notes are in
 
 | Var | Where | Meaning |
 |---|---|---|
-| `DASHSCOPE_API_KEY` | server | Qwen Cloud / DashScope API key |
-| `DASHSCOPE_BASE_URL` | server | region endpoint matching the key; default Singapore (`dashscope-intl`), US (Virginia) is `https://dashscope-us.aliyuncs.com/compatible-mode/v1` |
+| `DASHSCOPE_API_KEY` | server | Qwen Cloud API key (`sk-ws-...`) or Model Studio key |
+| `DASHSCOPE_BASE_URL` | server | OpenAI-compatible endpoint matching the key: your Qwen Cloud workspace endpoint, or a regional one (`dashscope-intl` Singapore default, `dashscope-us` US Virginia) |
 | `VERDICT_SIGNING_SECRET` | server | optional fixed HMAC secret for verdict signing (auto-generated and persisted to `.verdict-secret` if unset) |
 | `QWEN_VISION_MODEL` | server | default `qwen3-vl-flash` |
 | `QWEN_TEXT_MODEL` | server | default `qwen-plus` |

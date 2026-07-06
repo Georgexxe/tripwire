@@ -1,11 +1,12 @@
 /**
  * qwen.ts — Alibaba Cloud (Qwen Cloud / DashScope) integration.
  *
- * All cloud reasoning runs on Alibaba Cloud Model Studio (DashScope) through its
- * OpenAI-compatible endpoint. Base URLs are region-scoped (API keys are not
- * interchangeable across regions) — set DASHSCOPE_BASE_URL to match your key:
- *   Singapore:     https://dashscope-intl.aliyuncs.com/compatible-mode/v1 (default)
- *   US (Virginia): https://dashscope-us.aliyuncs.com/compatible-mode/v1
+ * All cloud reasoning runs on Qwen Cloud (Alibaba Cloud) through its
+ * OpenAI-compatible endpoint. Keys are scoped to a workspace/region, so set
+ * DASHSCOPE_BASE_URL to the endpoint shown next to your key:
+ *   Qwen Cloud workspace: https://<workspace>.maas.aliyuncs.com/compatible-mode/v1
+ *   Singapore (default):  https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+ *   US (Virginia):        https://dashscope-us.aliyuncs.com/compatible-mode/v1
  *
  * Two Qwen roles:
  *  1. ADJUDICATOR (qwen3-vl-flash / qwen-plus): decides severity AND audits the edge
