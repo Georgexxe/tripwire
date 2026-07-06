@@ -36,7 +36,7 @@ verdicts, and Qwen *audits* the edge model's claims instead of rubber-stamping t
 
 ## Qwen usage (two roles)
 
-1. **Adjudicator** (`qwen-vl-plus`): receives the compact summary + tiny keyframe and
+1. **Adjudicator** (`qwen3-vl-flash`): receives the compact summary + tiny keyframe and
    *cross-examines the edge model* — does the image actually support the claimed
    detection? Severity + `supports_claim` + reasoning.
 2. **Analyst** (`qwen-plus`): `GET /digest` turns the verified cloud ledger into a
@@ -93,8 +93,9 @@ integration lives in `apps/server/src/qwen.ts`; deployment notes are in
 | Var | Where | Meaning |
 |---|---|---|
 | `DASHSCOPE_API_KEY` | server | Qwen Cloud / DashScope API key |
+| `DASHSCOPE_BASE_URL` | server | region endpoint matching the key; default Singapore (`dashscope-intl`), US (Virginia) is `https://dashscope-us.aliyuncs.com/compatible-mode/v1` |
 | `VERDICT_SIGNING_SECRET` | server | optional fixed HMAC secret for verdict signing (auto-generated and persisted to `.verdict-secret` if unset) |
-| `QWEN_VISION_MODEL` | server | default `qwen-vl-plus` |
+| `QWEN_VISION_MODEL` | server | default `qwen3-vl-flash` |
 | `QWEN_TEXT_MODEL` | server | default `qwen-plus` |
 | `VITE_API_URL` | edge | backend URL |
 | `VITE_WATCH_LABELS` | edge | comma list, default `person` |

@@ -2,10 +2,13 @@
  * qwen.ts — Alibaba Cloud (Qwen Cloud / DashScope) integration.
  *
  * All cloud reasoning runs on Alibaba Cloud Model Studio (DashScope) through its
- * OpenAI-compatible endpoint: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+ * OpenAI-compatible endpoint. Base URLs are region-scoped (API keys are not
+ * interchangeable across regions) — set DASHSCOPE_BASE_URL to match your key:
+ *   Singapore:     https://dashscope-intl.aliyuncs.com/compatible-mode/v1 (default)
+ *   US (Virginia): https://dashscope-us.aliyuncs.com/compatible-mode/v1
  *
  * Two Qwen roles:
- *  1. ADJUDICATOR (qwen-vl-plus / qwen-plus): decides severity AND audits the edge
+ *  1. ADJUDICATOR (qwen3-vl-flash / qwen-plus): decides severity AND audits the edge
  *     model's claim against the keyframe — the cloud cross-examines the edge.
  *  2. ANALYST (qwen-plus): /digest summarizes the verified cloud ledger into a
  *     human incident report.
@@ -14,17 +17,18 @@ import OpenAI from "openai";
 import type { Escalation, Verdict } from "@tripwire/shared/src/types";
 import { signVerdict } from "./verdicts.js";
 
-const ALIBABA_QWEN_BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1";
+const ALIBABA_QWEN_BASE_URL =
+  process.env.DASHSCOPE_BASE_URL ?? "https://dashscope-intl.aliyuncs.com/compatible-mode/v1";
 
 const client = new OpenAI({
   apiKey: process.env.DASHSCOPE_API_KEY ?? "",
   baseURL: ALIBABA_QWEN_BASE_URL,
-  timeout: 15_000,   // a hung call must never stall the demo
+  timeout: 30_000,   // a hung call must never stall the pipeline
   maxRetries: 1,
 });
 
 // Vision-capable model when we send a keyframe; text model otherwise.
-const VISION_MODEL = process.env.QWEN_VISION_MODEL ?? "qwen-vl-plus";
+const VISION_MODEL = process.env.QWEN_VISION_MODEL ?? "qwen3-vl-flash";
 const TEXT_MODEL = process.env.QWEN_TEXT_MODEL ?? "qwen-plus";
 
 const SYSTEM_PROMPT = `You are Tripwire's cloud adjudicator. An on-device edge model watched

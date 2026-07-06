@@ -89,7 +89,7 @@
 
   <!-- Qwen -->
   <rect x="620" y="218" width="360" height="74" rx="9" fill="#ffffff" stroke="#ea580c" stroke-width="1.6"/>
-  <text x="636" y="244" class="box">Qwen reasoning — qwen-vl-plus / qwen-plus</text>
+  <text x="636" y="244" class="box">Qwen reasoning — qwen3-vl-flash / qwen-plus</text>
   <text x="636" y="264" class="boxsub">DashScope / Model Studio · OpenAI-compatible API</text>
   <text x="636" y="282" class="boxsub">dashscope-intl.aliyuncs.com  →  PROOF FILE: qwen.ts</text>
 
